@@ -1,5 +1,3 @@
-markdown
-複製程式碼
 # Client-Server Socket Communication
 
 ## 通訊格式
