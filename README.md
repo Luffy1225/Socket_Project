@@ -1,4 +1,26 @@
-# Client-Server Socket Communication
+# Client-Server Socket
+
+## 使用教學 
+
+### Client端
+
+系統 會要求輸入 這台Client名稱 目標Server IP 目標Server Port
+
+* 名稱預設為 `Default_ClientXXXX` (XXXX 為 隨機四碼)
+* IP預設為 `127.0.0.1` 
+* Port預設為 `8080`
+
+### Server端
+
+系統 會要求輸入 這台Server名稱 Server IP Server Port
+
+* 名稱預設為 `Server` 
+* IP預設為 `127.0.0.1` 
+* Port預設為 `8080`
+
+### 注意連線時 Server 與 Client 的 IP Port 應為一致!!
+
+
 
 ## 通訊格式
 
@@ -36,31 +58,34 @@
 
 4. **`list()`**
    - 請求伺服器列出所有連線的客戶端數量。
+   - 
+4. **`greet()`**
+   - 向Server 打招呼 Server將會告訴Client 他的Server名， (正常情況下 當建立連線後 會立即發送greet() )。 
 
 #### 伺服器端功能
 
 1. **`cls()`**
-- 清除伺服器螢幕資訊。
+   - 清除伺服器螢幕資訊。
 
 2. **`close()`**
-- 關閉伺服器連線。
+   - 關閉伺服器連線。
 
 3. **`history()`**
-- 顯示歷史訊息。
+   - 顯示歷史訊息。
 
 4. **`list()`**
-- 列出所有連線的客戶端數量。
+   - 列出所有連線的客戶端數量。
 
     ##### 對客戶端下達命令
 
 1. **`To "客戶端名稱" : cls()`**
-- 清除 "客戶端名稱" 螢幕資訊。
+   - 清除 "客戶端名稱" 螢幕資訊。
 
 2. **`To "客戶端名稱" : close()`**
-- 請求 "客戶端名稱" 關閉連線 (正常關閉)。
+   - 請求 "客戶端名稱" 關閉連線 (正常關閉)。
 
 3. **`To "客戶端名稱" : ban()`** // 待完成
-- 剔除 "客戶端名稱" 連線 (強制中斷)。
+   - 剔除 "客戶端名稱" 連線 (強制中斷)。
 
 
 
@@ -140,26 +165,12 @@
 ### 客戶端示例
 
 ```csharp
-string name = "Client1";
-string ip = "127.0.0.1";
-int port = 8080;
-
-Client_Socket client = new Client_Socket(name, ip, port);
-client.Show_Info();
-client.Connect();
-
-if (client.Connected)
-{
- client.Start();
-}
-else
-{
- Print_Tool.WriteLine("連線失敗", ConsoleColorType.Error);
-}
+Client_Socket Client = new Client_Socket(name, ip, port);
+Client.Start();
 ```
 
 伺服器示例
 ```csharp
-Server_Socket server = new Server_Socket("MainServer");
-server.Start();
+Server_Socket Server = new Server_Socket(name, ip, port);
+Server.Start();
 ```
