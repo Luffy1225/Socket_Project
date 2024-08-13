@@ -1,4 +1,26 @@
-# Client-Server Socket Communication
+# Client-Server Socket
+
+## 使用教學 
+
+### Client端
+
+系統 會要求輸入 這台Client名稱 目標Server IP 目標Server Port
+
+* 名稱預設為 `Default_ClientXXXX` (XXXX 為 隨機四碼)
+* IP預設為 `127.0.0.1` 
+* Port預設為 `8080`
+
+### Server端
+
+系統 會要求輸入 這台Server名稱 Server IP Server Port
+
+* 名稱預設為 `Server` 
+* IP預設為 `127.0.0.1` 
+* Port預設為 `8080`
+
+### 注意連線時 Server 與 Client 的 IP Port 應為一致!!
+
+
 
 ## 通訊格式
 
