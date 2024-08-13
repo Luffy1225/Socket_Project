@@ -59,7 +59,7 @@
    - 請求伺服器列出所有連線的客戶端數量。
      
 5. **`greet()`**
-   - 向Server 打招呼 Server將會告訴Client 他的Server名， (正常情況下 當建立連線後 會立即發送greet() )。
+   - 向Server 打招呼 Server將會告訴Client 他的Server名， (正常情況下 當建立連線後 會立即發送greet() )
 
 6. **`showinfo()`**
    - 傳送自己的Name, Ip, Port 到Server。
