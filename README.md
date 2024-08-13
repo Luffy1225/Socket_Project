@@ -103,14 +103,14 @@
 
 ## 範例
 
-### 客戶端示例
+### 客戶端範例
 
 ```csharp
 Client_Socket Client = new Client_Socket(name, ip, port);
 Client.Start();
 ```
 
-### 伺服器示例
+### 伺服器範例
 ```csharp
 Server_Socket Server = new Server_Socket(name, ip, port);
 Server.Start();
