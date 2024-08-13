@@ -143,7 +143,7 @@ namespace Server_Socket
                 }
                 else if (low_input == "cls()" )
                 {
-                    Send_Message(input);
+                    //Send_Message(input);
                     Refresh();
                 }
                 else if (low_input == "list()" )

@@ -85,7 +85,9 @@ namespace Client_Socket
             Port = port;
 
             Connect();
-            
+        }
+        private void Reconnect()
+        {
 
         }
 
@@ -97,7 +99,9 @@ namespace Client_Socket
             if (Connected)
             {
                 Task.Run(() => Handle_Receive_Message());
-                HandleInput();
+                HandleInput_KEY();
+                //HandleInput();
+            
             }
             else
             {
@@ -200,6 +204,7 @@ namespace Client_Socket
             {
                 Print_Tool.WriteLine("輸入文字: ", ConsoleColorType.Default);
                 string input = Console.ReadLine();
+
                 string command = input.ToLower();
                 if (command == "close()")
                 {
@@ -234,6 +239,19 @@ namespace Client_Socket
                 }
             }
         }
+
+
+        public void HandleInput_KEY() // Client 輸出  KEY   到 server
+        {
+            while (true)
+            {
+                var keyinfo = Console.ReadKey(true);
+                string key = keyinfo.Key.ToString();
+
+                Send_Message(key);
+            }
+        }
+  
 
         public void Handle_Receive_Message()
         {
@@ -355,6 +373,8 @@ namespace Client_Socket
             Print_Tool.WriteLine("https://github.com/Luffy1225/Socket_Project", ConsoleColorType.Announce);
         }
 
+
+        
     }
 
     class Client_Main
@@ -400,13 +420,21 @@ namespace Client_Socket
             int port;
             Keyin_Param(out name, out ip, out port);
 
+            
             Client_Socket Client = new Client_Socket(name, ip, port);
-            Client.Start();
+
+            while (true)
+            {
+                Client.Start();
+
+                Print_Tool.WriteLine("輸入 \"retry\" 重新連接", ConsoleColorType.Warning);
+                string input = Console.ReadLine();
+                if (input != "retry")
+                    break;
+
+            }
 
 
-
-
-            Console.ReadLine();
         }
     }
 
