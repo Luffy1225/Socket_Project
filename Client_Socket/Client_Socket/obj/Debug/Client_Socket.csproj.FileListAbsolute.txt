@@ -1,0 +1,20 @@
+d:\users\boshuo.zeng\documents\visual studio 2013\Projects\Client_Socket\Client_Socket\bin\Debug\Client_Socket.exe.config
+d:\users\boshuo.zeng\documents\visual studio 2013\Projects\Client_Socket\Client_Socket\bin\Debug\Client_Socket.exe
+d:\users\boshuo.zeng\documents\visual studio 2013\Projects\Client_Socket\Client_Socket\bin\Debug\Client_Socket.pdb
+d:\users\boshuo.zeng\documents\visual studio 2013\Projects\Client_Socket\Client_Socket\obj\Debug\Client_Socket.exe
+d:\users\boshuo.zeng\documents\visual studio 2013\Projects\Client_Socket\Client_Socket\obj\Debug\Client_Socket.pdb
+d:\users\boshuo.zeng\documents\visual studio 2013\Projects\Client_Socket\Client_Socket\obj\Debug\Client_Socket.csprojResolveAssemblyReference.cache
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Client_Socket.exe.config
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Client_Socket.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Client_Socket.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.csprojResolveAssemblyReference.cache
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.csprojResolveAssemblyReference.cache
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Client_Socket.exe.config
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Client_Socket.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Client_Socket.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Print_Tool.dll
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Print_Tool.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.pdb
