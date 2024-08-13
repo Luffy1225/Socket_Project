@@ -18,7 +18,7 @@ namespace Luffy_Tool
         Announce
     }
 
-    public class Print_Tool
+    public class Print_Tool // Console Print
     {
         public static void WriteLine(string message, ConsoleColorType ColorType)
         {
@@ -69,6 +69,10 @@ namespace Luffy_Tool
             foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor)))
                 Print_Tool.WriteLine("Hello World Color: " + color.ToString(), color);
         }
-        
+
+        public static void Refresh()
+        {
+            Console.Clear();
+        }
     }
 }

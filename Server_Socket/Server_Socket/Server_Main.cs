@@ -66,7 +66,7 @@ namespace Server_Socket
             }
         }
 
-        private async Task HandleClient(TcpClient client)  //處理 Client 的輸入
+        private async Task HandleClient(TcpClient client)  // Server 讀取 Client 輸入
         {
             NetworkStream stream = client.GetStream();
             try
@@ -123,7 +123,7 @@ namespace Server_Socket
             }
         }
 
-        private void HandleInput()  //處理 自己server 的輸入
+        private void HandleInput()  // Server 輸出到 Client
         {
             while (true)
             {
@@ -153,6 +153,18 @@ namespace Server_Socket
                 else if (low_input == "history()")
                 {
                     Show_History();
+                }
+                else if (low_input == "showinfo()")
+                {
+                    Show_Param();
+                }
+                else if (low_input == "greet()")
+                {
+                    Every_Greet();
+                }
+                else if (low_input == "help()")
+                {
+                    Help();
                 }
                 else
                 {
@@ -228,6 +240,23 @@ namespace Server_Socket
             }
         }
 
+        private void Show_Param()
+        {
+            Send_Message("Server = " + Server_Name);
+            Send_Message("IP = " + Host_IP);
+            Send_Message("Port = " + Port);
+        }
+
+        private void Every_Greet()
+        {
+            Send_Message("all", "greet()");
+        }
+
+
+        private void Help()
+        {
+            Print_Tool.WriteLine("https://github.com/Luffy1225/Socket_Project", ConsoleColorType.Announce);
+        }
 
     }
 
@@ -240,19 +269,25 @@ namespace Server_Socket
             name = Console.ReadLine();
             if (name == "")
                 name = "Server";
+            Print_Tool.WriteLine("Server = " + name, ConsoleColorType.Notice);
+
 
             Print_Tool.WriteLine("輸入Server IP:", ConsoleColorType.Default);
             ip = Console.ReadLine();
             if (ip == "")
                 ip = "127.0.0.1";
+            Print_Tool.WriteLine("IP = " + ip, ConsoleColorType.Notice);
+
 
             Print_Tool.WriteLine("輸入Server Port:", ConsoleColorType.Default);
             string portstr = Console.ReadLine();
             port = 8080;
             if (portstr != "")
                 port = int.Parse(portstr);
+            Print_Tool.WriteLine("Port = " + port.ToString(), ConsoleColorType.Notice);
 
         }
+
 
         static void Main()
         {
@@ -260,8 +295,8 @@ namespace Server_Socket
             int port;
             Keyin_Param(out name, out ip, out port);
 
-            Server_Socket server = new Server_Socket("Server");
-            server.Start();
+            Server_Socket Server = new Server_Socket(name, ip, port);
+            Server.Start();
 
 
 
@@ -270,7 +305,7 @@ namespace Server_Socket
 
 
 
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }
 }
