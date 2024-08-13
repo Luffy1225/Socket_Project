@@ -66,7 +66,7 @@
    - 傳送自己的Name, Ip, Port 到Server。
 
 7. **`help()`**
-   - 前往文件 https://github.com/Luffy1225/Socket_Project。
+   - 前往文件 https://github.com/Luffy1225/Socket_Project
 
 #### 伺服器端功能
 
@@ -89,7 +89,7 @@
    - 顯示Server的Name, Ip, Port。
 
 7. **`help()`**
-   - 前往文件 https://github.com/Luffy1225/Socket_Project。
+   - 前往文件 https://github.com/Luffy1225/Socket_Project
 
     ##### 對客戶端下達命令
 
