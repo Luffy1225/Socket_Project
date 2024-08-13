@@ -18,7 +18,7 @@
 * IP預設為 `127.0.0.1` 
 * Port預設為 `8080`
 
-### 注意連線時 Server 與 Client 的 IP Port 應為一致!!
+### !!注意連線時 Server 與 Client 的 IP Port 應為一致!!
 
 
 
@@ -58,9 +58,15 @@
 
 4. **`list()`**
    - 請求伺服器列出所有連線的客戶端數量。
-   - 
-4. **`greet()`**
-   - 向Server 打招呼 Server將會告訴Client 他的Server名， (正常情況下 當建立連線後 會立即發送greet() )。 
+     
+5. **`greet()`**
+   - 向Server 打招呼 Server將會告訴Client 他的Server名， (正常情況下 當建立連線後 會立即發送greet() )。
+
+6. **`showinfo()`**
+   - 傳送自己的Name, Ip, Port 到Server。
+
+7. **`help()`**
+   - 前往文件 https://github.com/Luffy1225/Socket_Project。
 
 #### 伺服器端功能
 
@@ -75,6 +81,15 @@
 
 4. **`list()`**
    - 列出所有連線的客戶端數量。
+  
+5. **`greet()`**
+   - 要求所有Client greet()。
+
+6. **`showinfo()`**
+   - 顯示Server的Name, Ip, Port。
+
+7. **`help()`**
+   - 前往文件 https://github.com/Luffy1225/Socket_Project。
 
     ##### 對客戶端下達命令
 
