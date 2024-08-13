@@ -27,10 +27,10 @@ namespace Luffy_Tool
             { ConsoleColorType.Default, ConsoleColor.White },
             { ConsoleColorType.Reply, ConsoleColor.Cyan },
             { ConsoleColorType.Send, ConsoleColor.Green },
-            { ConsoleColorType.Warning, ConsoleColor.Yellow },
-            { ConsoleColorType.Error, ConsoleColor.Red },
-            { ConsoleColorType.Notice, ConsoleColor.Magenta },
-            { ConsoleColorType.Announce, ConsoleColor.Blue }
+            { ConsoleColorType.Warning, ConsoleColor.Red },
+            { ConsoleColorType.Error, ConsoleColor.DarkRed },
+            { ConsoleColorType.Notice, ConsoleColor.DarkYellow },
+            { ConsoleColorType.Announce, ConsoleColor.DarkGray }
         };
 
 
@@ -62,6 +62,12 @@ namespace Luffy_Tool
 
             // 恢復控制台顏色
             Console.ForegroundColor = originalColor;
+        }
+
+        public static void Test_All_Color()
+        {
+            foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor)))
+                Print_Tool.WriteLine("Hello World Color: " + color.ToString(), color);
         }
         
     }

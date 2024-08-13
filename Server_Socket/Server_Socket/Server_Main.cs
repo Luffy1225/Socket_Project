@@ -19,6 +19,9 @@ namespace Server_Socket
         TcpListener Server;
         List<TcpClient> Clients = new List<TcpClient>();
 
+
+        List<string> history = new List<string>();
+
         public Server_Socket(string name)
         {
             Server_Name = name;
@@ -31,8 +34,16 @@ namespace Server_Socket
             Port = port;
         }
 
+        public void Refresh()
+        {
+            Show_Info();
+        }
+
+
         public void Start()
         {
+            Show_Info();
+
             IPAddress ipAddress = IPAddress.Parse(Host_IP);
             Server = new TcpListener(ipAddress, Port);
             Print_Tool.WriteLine(Server_Name + " is Hosting at " + Host_IP + ":" + Port, ConsoleColorType.Notice);
@@ -55,7 +66,7 @@ namespace Server_Socket
             }
         }
 
-        private async Task HandleClient(TcpClient client)  //接收input from client
+        private async Task HandleClient(TcpClient client)  //處理 Client 的輸入
         {
             NetworkStream stream = client.GetStream();
             try
@@ -68,6 +79,9 @@ namespace Server_Socket
                         break;
 
                     string response = Encoding.Unicode.GetString(buffer, 0, bytesRead);
+                    history.Add(response);
+
+
                     Print_Tool.WriteLine(response, ConsoleColorType.Reply);
 
                     string fromwho = Get_Target(response);
@@ -88,6 +102,10 @@ namespace Server_Socket
                         Send_Message("好的 我將關閉連線 " + response);
                         client.Close();
                     }
+                    else if (command == "history()")
+                    {
+                        Show_History(fromwho);
+                    }
                     else
                     {
                         //Send_Message("Received you Message : " + response);
@@ -105,7 +123,7 @@ namespace Server_Socket
             }
         }
 
-        private void HandleInput()  //server 下指令
+        private void HandleInput()  //處理 自己server 的輸入
         {
             while (true)
             {
@@ -132,6 +150,10 @@ namespace Server_Socket
                 {
                     List_All_Clients();
                 }
+                else if (low_input == "history()")
+                {
+                    Show_History();
+                }
                 else
                 {
                     Send_Message(input);
@@ -142,6 +164,8 @@ namespace Server_Socket
         private void Send_Message(string message)
         {
             message = Server_Name + " : " + message;
+            history.Add(message);
+
             byte[] data = Encoding.Unicode.GetBytes(message);
             foreach (var client in Clients)
             {
@@ -173,16 +197,14 @@ namespace Server_Socket
         public void Show_Info()
         {
             Console.Clear();
+            Print_Tool.WriteLine("Server端:", ConsoleColorType.Warning);
             Print_Tool.WriteLine("Name: " + Server_Name, ConsoleColorType.Default);
             Print_Tool.WriteLine("IP  : " + Host_IP, ConsoleColorType.Default);
             Print_Tool.WriteLine("Port: " + Port, ConsoleColorType.Default);
-            Print_Tool.WriteLine("\nServer端:   \n\n\n", ConsoleColorType.Notice);
+            Print_Tool.WriteLine("\n\n", ConsoleColorType.Default);
+
         }
 
-        public void Refresh()
-        {
-            Show_Info();
-        }
 
         private void List_All_Clients()
         {
@@ -195,16 +217,60 @@ namespace Server_Socket
             }
         }
 
+        private void Show_History(string towho ="")
+        {
+            for (int i = 0; i < history.Count; i++)
+            {
+                if (towho == "") // 如果沒有要傳給別人 就server自己顯示
+                    Print_Tool.WriteLine(history[i] , ConsoleColorType.Announce);
+                else 
+                    Send_Message(towho, history[i]);
+            }
+        }
+
 
     }
 
     class Program
     {
+
+        public static void Keyin_Param(out string name, out string ip, out int port)
+        {
+            Print_Tool.WriteLine("輸入Server名字:", ConsoleColorType.Default);
+            name = Console.ReadLine();
+            if (name == "")
+                name = "Server";
+
+            Print_Tool.WriteLine("輸入Server IP:", ConsoleColorType.Default);
+            ip = Console.ReadLine();
+            if (ip == "")
+                ip = "127.0.0.1";
+
+            Print_Tool.WriteLine("輸入Server Port:", ConsoleColorType.Default);
+            string portstr = Console.ReadLine();
+            port = 8080;
+            if (portstr != "")
+                port = int.Parse(portstr);
+
+        }
+
         static void Main()
         {
-            Print_Tool.WriteLine("Server端:   \n\n\n", ConsoleColorType.Notice);
+            string name, ip;
+            int port;
+            Keyin_Param(out name, out ip, out port);
+
             Server_Socket server = new Server_Socket("Server");
             server.Start();
+
+
+
+
+
+
+
+
+            Console.ReadLine();
         }
     }
 }
