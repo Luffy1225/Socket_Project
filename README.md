@@ -1,6 +1,5 @@
-# Socket_Project
-
-
+markdown
+複製程式碼
 # Client-Server Socket Communication
 
 ## 通訊格式
@@ -14,10 +13,13 @@
     主要分成兩大類:
     1. 在Server中傳遞訊息 / 下命令
     - `來源者 : 說出的訊息(或命令)`
+        
+        EX: `Default_Client9078 : 你好`
+
     2. 跟 目標者 說 / 下命令
     - `來源者 : To 目標者 : 對目標說出的訊息(或命令)`
 
-    EX: `Default_Client9078 : Hello Server. This is sent from Default_Client9078`
+        EX: `Default_Client9078 : Hello Server. This is sent from Default_Client9078`
 
 1. **發送給指定客戶端**
 To <Client_Name> : <Message>
@@ -25,33 +27,49 @@ To <Client_Name> : <Message>
 
 - 例如：`To Default_Client8351 : Hello, how are you?`
 
-2. **一般訊息**
-<Client_Name> : <Message>
+
+### 功能介紹
 
 
-- 例如：`Default_Client8351 : Hello Server!`
+#### Client 客戶端功能 
 
-3. **伺服器回應訊息**
-Server: <Server_Name> : <Message>
+    1. **`cls()`**
+    - 清除客戶端螢幕資訊。
 
+    2. **`close()`**
+    - 關閉客戶端連線。
 
-- 例如：`Server: MainServer : Welcome to the server!`
+    3. **`history()`**
+    - 請求伺服器發送歷史訊息。
 
-### 指令格式
+    4. **`list()`**
+    - 請求伺服器列出所有連線的客戶端數量。
 
-1. **`cls()`**
-- 清除客戶端/伺服器的螢幕資訊。
+#### Server 伺服器端功能 
 
-2. **`close()`**
-- 關閉客戶端連線或伺服器。
+    1. **`cls()`**
+    - 清除Server螢幕資訊。
 
-3. **`history()`**
-- 請求伺服器發送歷史訊息。
+    2. **`close()`**
+    - 關閉Server連線。
 
-4. **`list()`**
-- 請求伺服器列出所有連線的客戶端。
+    3. **`history()`**
+    - 顯示歷史訊息。
 
-## 客戶端功能
+    4. **`list()`**
+    - 列出所有連線的客戶端數量。
+
+    對 客戶端下達命令:
+
+    1. **`To "客戶端名稱" : cls()`**
+    - 清除 "客戶端名稱" 螢幕資訊。
+
+    2. **`To "客戶端名稱" : close()`**
+    - 請求 "客戶端名稱" 關閉連線(正常關閉)。
+
+    3. **`To "客戶端名稱" : ban()`** //待完成
+    - 剔除 "客戶端名稱" 連線 (強制中斷)
+
 
 ### 初始化
 
@@ -145,8 +163,10 @@ else
 {
  Print_Tool.WriteLine("連線失敗", ConsoleColorType.Error);
 }
+```
+
 伺服器示例
-csharp
-複製程式碼
+```csharp
 Server_Socket server = new Server_Socket("MainServer");
 server.Start();
+```
