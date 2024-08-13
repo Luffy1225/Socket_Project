@@ -58,6 +58,9 @@
 
 4. **`list()`**
    - 請求伺服器列出所有連線的客戶端數量。
+   - 
+4. **`greet()`**
+   - 向Server 打招呼 Server將會告訴Client 他的Server名， (正常情況下 當建立連線後 會立即發送greet() )。 
 
 #### 伺服器端功能
 
@@ -162,26 +165,12 @@
 ### 客戶端示例
 
 ```csharp
-string name = "Client1";
-string ip = "127.0.0.1";
-int port = 8080;
-
-Client_Socket client = new Client_Socket(name, ip, port);
-client.Show_Info();
-client.Connect();
-
-if (client.Connected)
-{
- client.Start();
-}
-else
-{
- Print_Tool.WriteLine("連線失敗", ConsoleColorType.Error);
-}
+Client_Socket Client = new Client_Socket(name, ip, port);
+Client.Start();
 ```
 
 伺服器示例
 ```csharp
-Server_Socket server = new Server_Socket("MainServer");
-server.Start();
+Server_Socket Server = new Server_Socket(name, ip, port);
+Server.Start();
 ```
