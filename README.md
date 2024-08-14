@@ -1,5 +1,7 @@
 # Client-Server Socket (ReadKey)
 
+- 傳輸用 Socket 前往 Socket_Project : Branch : `Main` (https://github.com/Luffy1225/Socket_Project/tree/ReadKey)
+
 ## 使用教學 
 
 ### Client端
