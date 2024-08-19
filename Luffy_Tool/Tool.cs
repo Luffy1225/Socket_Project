@@ -20,9 +20,12 @@ namespace Luffy_Tool
 
     public class Print_Tool // Console Print
     {
-        public static void WriteLine(string message, ConsoleColorType ColorType)
-        {
-            var colorMapping = new Dictionary<ConsoleColorType, ConsoleColor>
+        
+
+        /// <summary>
+        /// 顏色對應
+        /// </summary>
+        public static Dictionary<ConsoleColorType, ConsoleColor> ColorMapping = new Dictionary<ConsoleColorType, ConsoleColor>
         {
             { ConsoleColorType.Default, ConsoleColor.White },
             { ConsoleColorType.Reply, ConsoleColor.Cyan },
@@ -32,6 +35,18 @@ namespace Luffy_Tool
             { ConsoleColorType.Notice, ConsoleColor.DarkYellow },
             { ConsoleColorType.Announce, ConsoleColor.DarkGray }
         };
+
+
+
+        /// <summary>
+        /// 能夠自訂輸出文字 並自行設定顏色
+        /// </summary>
+        /// <param name="message"> 輸出文字 </param>
+        /// <param name="ColorType"> 顏色類型 </param>
+        /// 
+        public static void WriteLine(string message, ConsoleColorType ColorType)
+        {
+            Dictionary<ConsoleColorType, ConsoleColor> colorMapping = ColorMapping;
 
 
             // 儲存目前的控制台顏色
@@ -48,6 +63,13 @@ namespace Luffy_Tool
             // 恢復控制台顏色
             Console.ForegroundColor = originalColor;
         }
+
+
+        /// <summary>
+        /// 能夠自訂輸出文字 並自行設定顏色 (所需要的顏色可以用 Test_All_Color() 看需要什麼顏色)
+        /// </summary>
+        /// <param name="message"> 輸出文字 </param>
+        /// <param name="Color"> System.ConsoleColor </param>
         public static void WriteLine(string message, ConsoleColor Color)
         {
 
@@ -63,13 +85,18 @@ namespace Luffy_Tool
             // 恢復控制台顏色
             Console.ForegroundColor = originalColor;
         }
-
+        /// <summary>
+        /// 顯示所有ConsoleColor 
+        /// </summary>
         public static void Test_All_Color()
         {
             foreach (ConsoleColor color in Enum.GetValues(typeof(ConsoleColor)))
                 Print_Tool.WriteLine("Hello World Color: " + color.ToString(), color);
         }
 
+        /// <summary>
+        /// 清除 Console
+        /// </summary>
         public static void Refresh()
         {
             Console.Clear();
