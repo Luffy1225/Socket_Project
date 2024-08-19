@@ -13,19 +13,83 @@ using Luffy_Tool;
 
 namespace Client_Socket
 {
+
+    class InputHandler
+    {
+        private Client_Socket _client;
+
+        public InputHandler(Client_Socket client)
+        {
+            _client = client;
+        }
+
+        public void StartHandling()
+        {
+            while (true)
+            {
+                Print_Tool.WriteLine("輸入文字: ", ConsoleColorType.Default);
+
+                string input = Console.ReadLine();
+                string command = input.ToLower();
+
+                if (command == "close()")
+                {
+                    _client.Close();
+                    break;
+                }
+                else if (command == "greet()")
+                {
+                    _client.Greeting();
+                }
+                else if (command == "cls()")
+                {
+                    _client.Refresh();
+                }
+                else if (command == "history()")
+                {
+                    _client.Send_Message(_client.Target_Server_Name, "history()");
+                }
+                else if (command == "showinfo()")
+                {
+                    _client.Show_Param();
+                }
+                else if (command == "help()")
+                {
+                    _client.Help();
+                }
+                else
+                {
+                    _client.Send_Message(input);
+                }
+            }
+        }
+
+
+    }
+
+
+
     class Client_Socket
     {
-        string Client_Name;  //目前client 名稱
+        private string Client_Name;  //目前client 名稱
 
-        string Target_Server_Name;  //目標server名稱
-        
-        string Ip = "127.0.0.1";
-        int Port = 8080;
+        internal string Target_Server_Name;  //目標server名稱
+
+        private string Ip = "127.0.0.1";
+        private int Port = 8080;
+
+        private bool RandomName = false;
 
 
-        TcpClient client;
+        private TcpClient client;
 
-        NetworkStream stream;
+        private NetworkStream stream;
+
+        private int Connect_Timeout = 100;
+        private int Retry_Time = 10;
+
+        private bool _isRunning = true;
+
 
         public bool Connected
         {
@@ -39,6 +103,13 @@ namespace Client_Socket
             }
         }
 
+        public Client_Socket()
+        {
+            Client_Name = Random_Name();
+            Ip = "127.0.0.1";
+            Port = 8080;
+        }
+
         public Client_Socket(string myname)
         {
             Client_Name = myname;
@@ -48,15 +119,27 @@ namespace Client_Socket
 
         public Client_Socket(string myname, string ipstr, int port)
         {
-            Client_Name = myname;
+            if (myname == "") 
+                Client_Name = Random_Name();
+            else
+                Client_Name = myname;
+
             Ip = ipstr;
             Port = port;
         }
 
+
+        public void Set_Default()
+        {
+            Ip = "127.0.0.1";
+            Port = 8080;
+        }
+
+
         public void Connect()
         {
             Print_Tool.WriteLine("目標 : " + Ip + ":" + Port, ConsoleColorType.Notice);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < Retry_Time; i++)
             {
                 try
                 {
@@ -71,8 +154,8 @@ namespace Client_Socket
                 }
                 catch (Exception ex)
                 {
-                    Print_Tool.WriteLine(ex.Message + " (已嘗試" + (i + 1) + "/5)", ConsoleColorType.Warning);
-                    Thread.Sleep(500); // 延遲 0.5 秒後重試
+                    Print_Tool.WriteLine(ex.Message + " (已嘗試" + (i + 1) + "/" + Retry_Time+ ")", ConsoleColorType.Warning);
+                    Thread.Sleep(Connect_Timeout); // 延遲 0.5 秒後重試
                 }
                 
             }
@@ -97,7 +180,10 @@ namespace Client_Socket
             if (Connected)
             {
                 Task.Run(() => Handle_Receive_Message());
-                HandleInput();
+
+                InputHandler inputHandler = new InputHandler(this);
+                inputHandler.StartHandling();
+                //HandleInput();
             }
             else
             {
@@ -110,8 +196,23 @@ namespace Client_Socket
         public void Close()
         {
             Send_Message("Server", "close()");
+            _isRunning = false;
+            Print_Tool.WriteLine("Closing", ConsoleColorType.Warning);
+            stream.Close();
             client.Close();
         }
+
+        public string Random_Name()
+        {
+            Random rnd = new Random();
+            string name = "Default_Client";
+
+            int rint = rnd.Next(0, 10000); // 生成介於 0 到 9999 的隨機數字
+            string rstring = rint.ToString("D4");
+            name += rstring;
+            return name;
+        }
+
 
         public void Send_Message(string message)// 發送資料至伺服器 一定是send color
         {
@@ -125,7 +226,7 @@ namespace Client_Socket
 
         }
 
-        private void Send_Message(string towho, string message)
+        public void Send_Message(string towho, string message)
         {
             message = "To " + towho + " : " + message;
             Send_Message(message);
@@ -199,13 +300,13 @@ namespace Client_Socket
             while (true)
             {
                 Print_Tool.WriteLine("輸入文字: ", ConsoleColorType.Default);
+
                 string input = Console.ReadLine();
                 string command = input.ToLower();
+
                 if (command == "close()")
                 {
-                    Send_Message("我將關閉連線");
-                    Print_Tool.WriteLine("Client關閉中...", ConsoleColorType.Warning);
-                    client.Close();
+                    Close();
                     break;
                 }
                 else if (command == "greet()")
@@ -237,7 +338,7 @@ namespace Client_Socket
 
         public void Handle_Receive_Message()
         {
-            while (true)
+            while (_isRunning)
             {
                 try
                 {
@@ -343,14 +444,14 @@ namespace Client_Socket
         }
 
 
-        private void Show_Param()
+        internal void Show_Param()
         {
             Send_Message("Name = " + Client_Name);
             Send_Message("IP = " + Ip);
             Send_Message("Port = " + Port);
         }
 
-        private void Help()
+        internal void Help()
         {
             Print_Tool.WriteLine("https://github.com/Luffy1225/Socket_Project", ConsoleColorType.Announce);
         }
@@ -396,17 +497,21 @@ namespace Client_Socket
 
         static void Main(string[] args)
         {
-            string name, ip;
-            int port;
-            Keyin_Param(out name, out ip, out port);
+            //string name, ip;
+            //int port;
+            //Keyin_Param(out name, out ip, out port);
 
-            Client_Socket Client = new Client_Socket(name, ip, port);
+            //Client_Socket Client = new Client_Socket(name, ip, port);
+            //Client.Start();
+
+
+
+            Client_Socket Client = new Client_Socket();
             Client.Start();
 
+            Console.ReadKey();
 
-
-
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 

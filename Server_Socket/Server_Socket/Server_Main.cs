@@ -5,14 +5,77 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using Luffy_Tool;
 
 
 namespace Server_Socket
 {
+
+    class InputHandler
+    {
+        private Server_Socket _server;
+
+        public InputHandler(Server_Socket server)
+        {
+            _server = server;
+        }
+
+        public void StartHandling()
+        {
+            while (true)
+            {
+                Print_Tool.WriteLine("輸入文字: ", ConsoleColorType.Default);
+
+                string input = Console.ReadLine();
+                string command = input.ToLower();
+
+                if (command == "close()")
+                {
+                    _server.Close();
+                    break;
+                }
+                else if (command == "cls()")
+                {
+                    _server.cls();
+                }
+                else if (command == "list()")
+                {
+                    _server.List_All_Clients();
+                }
+                else if (command == "history()")
+                {
+                    _server.Show_History();
+                }
+                else if (command == "clearhis()")
+                {
+                    _server.Clear_History();
+                }
+                else if (command == "showinfo()")
+                {
+                    _server.Show_Param();
+                }
+                else if (command == "greet()")
+                {
+                    _server.Every_Greet();
+                }
+                else if (command == "help()")
+                {
+                    _server.Help();
+                }
+                else
+                {
+                    _server.Send_Message(input);
+                }
+            }
+        }
+
+
+    }
+
     class Server_Socket
     {
-        string Server_Name;
+        string Server_Name = "Server";
         string Host_IP = "127.0.0.1";
         int Port = 8080;
 
@@ -21,6 +84,13 @@ namespace Server_Socket
 
 
         List<string> history = new List<string>();
+
+        public Server_Socket()
+        {
+            Server_Name = "Server";
+            Host_IP = "127.0.0.1";
+            Port = 8080;
+        }
 
         public Server_Socket(string name)
         {
@@ -32,6 +102,13 @@ namespace Server_Socket
             Server_Name = name;
             Host_IP = hosting_ip;
             Port = port;
+        }
+
+        public void Set_Default()
+        {
+            Server_Name = "Server";
+            Host_IP = "127.0.0.1";
+            Port = 8080;
         }
 
         public void Refresh()
@@ -52,7 +129,23 @@ namespace Server_Socket
 
             Task.Run(() => AcceptClients());
 
-            HandleInput();
+
+            InputHandler inputHandler = new InputHandler(this);
+            inputHandler.StartHandling();
+        }
+
+        public void Close()
+        {
+            Print_Tool.WriteLine("Server 關閉中...", ConsoleColorType.Warning);
+
+            List<TcpClient> clientsCopy = Clients.ToList(); // List 複製   以防止for迴圈中 有人修改 list內容導致 程式崩潰
+
+            foreach (var client in clientsCopy)
+            {
+                client.GetStream().Close();
+                client.Close();
+            }
+            Server.Stop();
         }
 
         private async Task AcceptClients()
@@ -87,6 +180,7 @@ namespace Server_Socket
                     string fromwho = Get_Target(response);
                     string message = response.Substring(fromwho.Length + 2).Trim();
                     string command = message.ToLower(); // Command 全部為小寫
+                    command = Get_Command(command);
                     
 
                     if (message.StartsWith("Hello Server. This is sent from "))
@@ -104,7 +198,7 @@ namespace Server_Socket
                     }
                     else if (command == "history()")
                     {
-                        Show_History(fromwho);
+                        Show_History();
                     }
                     else
                     {
@@ -121,6 +215,24 @@ namespace Server_Socket
                 client.Close();
                 Clients.Remove(client);
             }
+
+
+        }
+
+        private string Get_Command(string msg)
+        {
+            // 找到冒號後的部分
+            if (msg.Contains("to"))
+            {
+                int colonIndex = msg.IndexOf(':');
+                if (colonIndex >= 0)
+                {
+                    // 移除"To xxxxxxxxxxx : " 只保留 cmd()
+                    return msg.Substring(colonIndex + 1).Trim();
+                }
+                return msg; // 如果沒有找到冒號，直接返回原始消息
+            }
+            return msg;
         }
 
         private void HandleInput()  // Server 輸出到 Client
@@ -131,20 +243,19 @@ namespace Server_Socket
 
                 string input = Console.ReadLine();
                 string low_input = input.ToLower();
-                if (input.Equals("close()", StringComparison.OrdinalIgnoreCase))
+                //if (input.Equals("close()", StringComparison.OrdinalIgnoreCase))
+                //{
+                //    Close();
+                //    break;
+                //}
+                if (low_input == "close()")
                 {
-                    Print_Tool.WriteLine("Server 關閉中...", ConsoleColorType.Warning);
-                    foreach (var client in Clients)
-                    {
-                        client.Close();
-                    }
-                    Server.Stop();
+                    Close();
                     break;
                 }
                 else if (low_input == "cls()" )
                 {
-                    Send_Message(input);
-                    Refresh();
+                    cls();
                 }
                 else if (low_input == "list()" )
                 {
@@ -173,13 +284,16 @@ namespace Server_Socket
             }
         }
 
-        private void Send_Message(string message)
+        public void Send_Message(string message)
         {
             message = Server_Name + " : " + message;
             history.Add(message);
 
             byte[] data = Encoding.Unicode.GetBytes(message);
-            foreach (var client in Clients)
+
+            List<TcpClient> clientsCopy = Clients.ToList(); // List 複製   以防止for迴圈中 有人修改 list內容導致 程式崩潰
+
+            foreach (var client in clientsCopy)
             {
                 NetworkStream stream = client.GetStream();
                 stream.Write(data, 0, data.Length);
@@ -187,18 +301,13 @@ namespace Server_Socket
             Print_Tool.WriteLine(message, ConsoleColorType.Send);
         }
 
-        private void Send_Message(string towho, string message)
+        public void Send_Message(string towho, string message)
         {
             message = "To " + towho + " : " + message;
             Send_Message(message);
         }
 
 
-        private void Greeting(string who = "")
-        {
-            //Send_Message("Hello " + who + ". This is " + Server_Name);
-            Send_Message(who, "Hello . This is Server: " + Server_Name);
-        }
 
         private string Get_Target(string msg)
         {
@@ -206,6 +315,23 @@ namespace Server_Socket
             return chunks[0].Trim();
         }
 
+
+
+
+
+        #region 功能區
+
+        internal void cls()
+        {
+            Send_Message("cls");
+            Refresh();
+        }
+
+        internal void Greeting(string who = "")
+        {
+            //Send_Message("Hello " + who + ". This is " + Server_Name);
+            Send_Message(who, "Hello . This is Server: " + Server_Name);
+        }
         public void Show_Info()
         {
             Console.Clear();
@@ -216,21 +342,28 @@ namespace Server_Socket
             Print_Tool.WriteLine("\n\n", ConsoleColorType.Default);
 
         }
-
-
-        private void List_All_Clients()
+        internal void List_All_Clients()
         {
             if (Clients.Count == 0)
                 Print_Tool.WriteLine("0 Clients in the Server", ConsoleColorType.Default);
 
             for (int i = 0; i < Clients.Count; i++)
             {
-                Print_Tool.WriteLine("No. "+ i + Clients[i].ToString() , ConsoleColorType.Default);
+                Print_Tool.WriteLine("No. "+ i + " " +  Clients[i].Client.ToString(), ConsoleColorType.Default);
             }
-        }
+            Print_Tool.WriteLine(Clients.Count + " In the Server", ConsoleColorType.Notice);
 
-        private void Show_History(string towho ="")
+
+        }
+        internal void Show_History(string towho = "")
         {
+            if (history.Count == 0)
+            {
+                Print_Tool.WriteLine("No History..", ConsoleColorType.Warning);
+
+            }
+
+
             for (int i = 0; i < history.Count; i++)
             {
                 if (towho == "") // 如果沒有要傳給別人 就server自己顯示
@@ -239,24 +372,27 @@ namespace Server_Socket
                     Send_Message(towho, history[i]);
             }
         }
-
-        private void Show_Param()
+        internal void Clear_History()
+        {
+            Print_Tool.WriteLine("Clear History", ConsoleColorType.Warning);
+            history.Clear();
+        }
+        internal void Show_Param()
         {
             Send_Message("Server = " + Server_Name);
             Send_Message("IP = " + Host_IP);
             Send_Message("Port = " + Port);
         }
-
-        private void Every_Greet()
+        internal void Every_Greet()
         {
             Send_Message("all", "greet()");
         }
-
-
-        private void Help()
+        internal void Help()
         {
             Print_Tool.WriteLine("https://github.com/Luffy1225/Socket_Project", ConsoleColorType.Announce);
         }
+
+        #endregion
 
     }
 
@@ -289,19 +425,40 @@ namespace Server_Socket
         }
 
 
-        static void Main()
+        static void Main(string[] args)
         {
-            string name, ip;
-            int port;
-            Keyin_Param(out name, out ip, out port);
+            //string name = "Server";
+            //string ip = "";
+            //int port = 8080;
+            //Server_Socket Server;
 
-            Server_Socket Server = new Server_Socket(name, ip, port);
+            //if (args.Length == 1)
+            //{
+            //    name = args[0];
+            //    Server = new Server_Socket();
+            //}
+            //if (args.Length == 3)
+            //{
+            //    name = args[0];
+            //    ip = args[1];
+            //    port = int.Parse(args[2]);
+            //}
+            //else
+            //{
+            //    Keyin_Param(out name, out ip, out port);
+            //}
+
+
+
+            
+            //Server = new Server_Socket(name, ip, port);
+            //Server.Start();
+
+
+
+
+            Server_Socket Server = new Server_Socket();
             Server.Start();
-
-
-
-
-
 
 
 
