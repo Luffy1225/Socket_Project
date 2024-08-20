@@ -5,6 +5,26 @@
 
 ## 使用教學 
 
+### 一般執行 (推薦!!)
+
+到`Run`資料夾中 點擊 `Server_Socket.exe` 或 `Client_Socket.exe` 
+
+> [!IMPORTANT]
+> 一般執行請確保 `Print_Tool.dll` 存在
+
+### 腳本執行
+
+前往Run資料夾 點擊 `AutoRun.bat` 執行自動化執行
+
+關於自動化執行相關參數 可以到 `RunParameter.ini` 進行修改
+   - `ClientCount` : 一次開啟的Client數量
+   - `ServerName` : 自動化 的 Server 名稱
+   - `ConnectIP` : 自動化 的 Server/Client 所連接的 IP
+   - `ConnectPort` 自動化 的 Server/Client 所連接的 Port
+
+> [!IMPORTANT]
+> 腳本執行請確保 `Print_Tool.dll` `RunParameter.ini` 存在
+
 ### Client端
 
 系統 會要求輸入 這台Client名稱 目標Server IP 目標Server Port
@@ -123,12 +143,4 @@ Server_Socket Server = new Server_Socket(name, ip, port);
 Server.Start();
 ```
 
-## 腳本使用
 
-前往Run資料夾 點擊 `AutoRun.bat` 執行自動化執行
-
-關於自動化執行相關參數 可以到 `RunParameter.ini` 進行修改
-   - `ClientCount` : 一次開啟的Client數量
-   - `ServerName` : 自動化 的 Server 名稱
-   - `ConnectIP` : 自動化 的 Server/Client 所連接的 IP
-   - `ConnectPort` 自動化 的 Server/Client 所連接的 Port
