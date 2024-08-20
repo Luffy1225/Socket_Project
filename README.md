@@ -21,7 +21,7 @@
 * Port預設為 `8080`
 
 > [!IMPORTANT]
-> !!注意連線時 Server 與 Client 的 IP Port 應為一致!!
+> !!注意連線時 Server 與 Client 的 `IP` `Port` 應為一致!!
 
 ## 通訊格式
 
