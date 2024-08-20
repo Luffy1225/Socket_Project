@@ -1,42 +1,35 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal
 
-rem 讀取配置檔案
-for /f "tokens=1,* delims==" %%a in ('findstr /r /c:"^[^;]" RunParamater.ini') do (
-    set "key=%%a"
-    set "value=%%b"
-    
-    rem 去除鍵和值中的空白
-    set "key=!key: =!"
-    set "value=!value: =!"
-    
-    rem 去除值中的引號
-    set "value=!value:"=!"
-
-    rem 根據鍵名設置參數
-    if "!key!"=="ClientCount" set "iterations=!value!"
-    if "!key!"=="ServerName" set "ServerName=!value!"
+REM 讀取RunParameter.ini中的參數，並儲存在局部變數中
+for /f "tokens=2 delims==" %%a in ('findstr "ClientCount" RunParameter.ini') do (
+    set "ClientCount=%%a"
 )
 
-rem 顯示結果
-echo ClientCount=%iterations%
-echo ServerName=%ServerName%
-
-rem 設定 .exe 文件的路徑
-set "serverExePath=Server_Socket.exe"
-set "clientExePath=Client_Socket.exe"
-
-rem 執行 Server_Socket.exe 不等待
-echo Running Server_Socket.exe...
-start "" "%serverExePath%"
-
-rem 根據 iterations 執行 Client_Socket.exe
-echo Running Client_Socket.exe %iterations% times...
-for /l %%i in (1,1,%iterations%) do (
-    echo Running Client_Socket.exe iteration %%i...
-    start "" "%clientExePath%"
+for /f "tokens=2 delims==" %%a in ('findstr "ServerName" RunParameter.ini') do (
+    set "ServerName=%%a"
 )
 
-echo All Client_Socket.exe executions initiated.
+for /f "tokens=2 delims==" %%a in ('findstr "ConnectIP" RunParameter.ini') do (
+    set "ConnectIP=%%a"
+)
+
+for /f "tokens=2 delims==" %%a in ('findstr "ConnectPort" RunParameter.ini') do (
+    set "ConnectPort=%%a"
+)
+
+REM 去除多餘的引號
+set "ServerName=%ServerName:"=%"
+set "ConnectIP=%ConnectIP:"=%"
+set "ConnectPort=%ConnectPort:"=%"
+
+REM 執行Server_Socket.exe，不等待結束
+ start "" Server_Socket.exe %ServerName%
+
+
+REM 根據ClientCount的數量執行Client_Socket.exe，不等待結束
+for /l %%i in (1,1,%ClientCount%) do (
+    start "" Client_Socket.exe %ConnectIP% %ConnectPort%
+)
+
 endlocal
-pause

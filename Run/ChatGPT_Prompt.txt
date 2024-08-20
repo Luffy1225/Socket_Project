@@ -1,0 +1,13 @@
+幫我寫一個腳本
+
+我想要 到RunParameter.ini:
+[Settings]
+ClientCount=2
+ServerName="Server"
+ConnectIP="127.0.0.1"
+ConnectPort="8080"
+取得這些參數
+
+並且 執行 Server_Socket.exe(不用等待結束) 1次
+
+在執行 Client_Socket.exe(不用等待結束 )   ClientCount次
