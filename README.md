@@ -125,4 +125,4 @@ Server.Start();
 前往Run資料夾 點擊 `AutoRun.bat` 執行自動化執行
 
 關於自動化執行相關參數 可以到 `RunParameter.ini` 進行修改
-    `ClientCount` : 
+   - `ClientCount` : 一次開啟的Client數量
