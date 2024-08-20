@@ -460,7 +460,7 @@ namespace Server_Socket
                     case 3:
                         name = args[0];
                         ip = args[1];
-                        portstr = args[3];
+                        portstr = args[2];
                         break;
                     default:
                         Print_Tool.WriteLine("參數輸入: "+ args.Length+ " 個 不合規定!", ConsoleColorType.Error);

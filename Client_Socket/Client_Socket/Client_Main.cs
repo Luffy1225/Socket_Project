@@ -477,7 +477,7 @@ namespace Client_Socket
 
     }
 
-    class Client_Main
+    class Program
     {
         public static void Keyin_Param(out string name, out string ip, out int port) //可能為空
         {
@@ -512,16 +512,17 @@ namespace Client_Socket
                 switch (args.Length)
                 {
                     case 1:
-                        name = args[0];
+                        //name = args[0];
                         break;
                     case 2:
-                        name = args[0];
-                        ip = args[1];
+                        //name = args[0];
+                        ip = args[0];
+                        portstr = args[1];
                         break;
                     case 3:
                         name = args[0];
                         ip = args[1];
-                        portstr = args[3];
+                        portstr = args[2];
                         break;
                     default:
                         Print_Tool.WriteLine("參數輸入: " + args.Length + " 個 不合規定!", ConsoleColorType.Error);
@@ -533,6 +534,9 @@ namespace Client_Socket
 
 
             Client_Socket Client = new Client_Socket(name, ip, port);
+
+            Client.Show_Info();
+
             Client.Set_Default();
             Client.Start();
 
