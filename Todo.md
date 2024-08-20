@@ -23,3 +23,9 @@
 
 - [ ] 任務()
 - ~~[x] 已完成 (提出時間 YYYY-MM-DD /完成日期: YYYY-MM-DD)~~
+- [x] 已完成 (完成日期: YYYY-MM-DD)
+
+```markdown
+- [ ] 任務()
+- [x] 已完成 (完成日期: YYYY-MM-DD)
+```
