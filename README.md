@@ -7,7 +7,7 @@
 
 ### 一般執行 (推薦!!)
 
-到`Run`資料夾中 點擊 `Server_Socket.exe` 或 `Client_Socket.exe` 
+到 `Run` 資料夾中 點擊 `Server_Socket.exe` 或 `Client_Socket.exe` 
 
 > [!IMPORTANT]
 > 一般執行請確保 `Print_Tool.dll` 存在
