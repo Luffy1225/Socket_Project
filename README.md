@@ -1,6 +1,7 @@
 # Client-Server Socket
 
  - 遊戲用Socket 前往 Socket_Project : Branch : [ReadKey](https://github.com/Luffy1225/Socket_Project/tree/ReadKey)
+ - [Todo List](https://github.com/Luffy1225/Socket_Project/blob/main/Todo.md)
 
 ## 使用教學 
 
