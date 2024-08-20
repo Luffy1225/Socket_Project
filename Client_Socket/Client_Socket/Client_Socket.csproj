@@ -48,8 +48,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Luffy_Tool\Luffy_Tool.csproj">
-      <Project>{0438f676-f5ec-4c17-b403-7c72427afa6d}</Project>
+    <ProjectReference Include="..\..\Luffy_Tool\Luffy_Tool\Luffy_Tool.csproj">
+      <Project>{e14b4aeb-ca6e-493e-8235-ff12cc9a3f0f}</Project>
       <Name>Luffy_Tool</Name>
     </ProjectReference>
   </ItemGroup>

@@ -18,5 +18,5 @@ D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client
 D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Print_Tool.pdb
 D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.exe
 D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Client_Socket\Client_Socket\obj\Debug\Client_Socket.pdb
-D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Print_Tool.dll
-D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Print_Tool.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Luffy_Tool.dll
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Luffy_Tool.pdb

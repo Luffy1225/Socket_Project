@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 組件的一般資訊是由下列的屬性集控制。
 // 變更這些屬性的值即可修改組件的相關
 // 資訊。
-[assembly: AssemblyTitle("Print_Tool")]
+[assembly: AssemblyTitle("Luffy_Tool")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Print_Tool")]
+[assembly: AssemblyProduct("Luffy_Tool")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 下列 GUID 為專案公開 (Expose) 至 COM 時所要使用的 typelib ID
-[assembly: Guid("55528c32-28d3-4e9f-9c4c-e18f11738019")]
+[assembly: Guid("03372ccc-1a05-4b41-b070-fb0bd4534dc6")]
 
 // 組件的版本資訊是由下列四項值構成: 
 //
