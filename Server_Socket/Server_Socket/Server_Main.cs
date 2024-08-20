@@ -424,7 +424,7 @@ namespace Server_Socket
     {
         public static void Keyin_Param(out string name, out string ip, out int port) //可能為空
         {
-            Print_Tool.WriteLine("輸入Server名字:", ConsoleColorType.Default);
+            Print_Tool.WriteLine("輸入Server名字:", ConsoleColorType.Notice);
             name = Console.ReadLine();
 
             Print_Tool.WriteLine("輸入Server IP:", ConsoleColorType.Default);
