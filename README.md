@@ -20,8 +20,8 @@
 * IP預設為 `127.0.0.1` 
 * Port預設為 `8080`
 
-### !!注意連線時 Server 與 Client 的 IP Port 應為一致!!
-
+> [!IMPORTANT]
+> !!注意連線時 Server 與 Client 的 IP Port 應為一致!!
 
 ## 通訊格式
 
