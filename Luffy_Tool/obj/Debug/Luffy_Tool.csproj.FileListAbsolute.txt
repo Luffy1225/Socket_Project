@@ -6,3 +6,8 @@ D:\Users\boshuo.zeng\Desktop\Socket_Project\Luffy_Tool\bin\Debug\Print_Tool.dll
 D:\Users\boshuo.zeng\Desktop\Socket_Project\Luffy_Tool\bin\Debug\Print_Tool.pdb
 D:\Users\boshuo.zeng\Desktop\Socket_Project\Luffy_Tool\obj\Debug\Print_Tool.dll
 D:\Users\boshuo.zeng\Desktop\Socket_Project\Luffy_Tool\obj\Debug\Print_Tool.pdb
+D:\Users\boshuo.zeng\Desktop\Readkey\Socket_Project\Luffy_Tool\bin\Debug\Print_Tool.dll
+D:\Users\boshuo.zeng\Desktop\Readkey\Socket_Project\Luffy_Tool\bin\Debug\Print_Tool.pdb
+D:\Users\boshuo.zeng\Desktop\Readkey\Socket_Project\Luffy_Tool\obj\Debug\Luffy_Tool.csprojResolveAssemblyReference.cache
+D:\Users\boshuo.zeng\Desktop\Readkey\Socket_Project\Luffy_Tool\obj\Debug\Print_Tool.dll
+D:\Users\boshuo.zeng\Desktop\Readkey\Socket_Project\Luffy_Tool\obj\Debug\Print_Tool.pdb

@@ -13,6 +13,31 @@ using Luffy_Tool;
 
 namespace Client_Socket
 {
+
+    class InputHandler
+    {
+        private Client_Socket _client;
+
+        public InputHandler(Client_Socket client)
+        {
+            _client = client;
+        }
+
+        public void StartHandling_KEY() //Client 輸出到 Server          // ReadKey 功能  
+        {
+            while (true)
+            {
+                var keyinfo = Console.ReadKey(true);
+                string key = keyinfo.Key.ToString();
+
+                _client.Send_Message(key);
+            }
+        }
+
+
+    }
+
+
     class Client_Socket
     {
         string Client_Name;  //目前client 名稱
@@ -39,19 +64,36 @@ namespace Client_Socket
             }
         }
 
+        #region Default Parameter
+
+        static private string Default_Client_Name = Get_Random_Name(); ///要改
+        static private string Default_Ip = "127.0.0.1";
+        static private int Default_Port = 8080;
+        #endregion
+
+        public Client_Socket()
+        {
+            Client_Name = Default_Client_Name;
+            Ip = Default_Ip;
+            Port = Default_Port;
+        }
+
         public Client_Socket(string myname)
         {
             Client_Name = myname;
-            Ip = "127.0.0.1";
-            Port = 8080;
+
+            Ip = Default_Ip;
+            Port = Default_Port;
         }
 
-        public Client_Socket(string myname, string ipstr, int port)
+        public Client_Socket(string name, string ipstr, int port)
         {
-            Client_Name = myname;
+            Client_Name = name;
             Ip = ipstr;
             Port = port;
         }
+
+        
 
         public void Connect()
         {
@@ -99,7 +141,10 @@ namespace Client_Socket
             if (Connected)
             {
                 Task.Run(() => Handle_Receive_Message());
-                HandleInput_KEY();
+
+
+                InputHandler inputHandler = new InputHandler(this);
+                inputHandler.StartHandling_KEY();      //ReadKey
                 //HandleInput();
             
             }
@@ -116,6 +161,11 @@ namespace Client_Socket
             Send_Message("Server", "close()");
             client.Close();
         }
+
+
+
+
+
 
         public void Send_Message(string message)// 發送資料至伺服器 一定是send color
         {
@@ -198,60 +248,6 @@ namespace Client_Socket
             }
 
         }
-        public void HandleInput() // Client 輸出到 server
-        {
-            while (true)
-            {
-                Print_Tool.WriteLine("輸入文字: ", ConsoleColorType.Default);
-                string input = Console.ReadLine();
-
-                string command = input.ToLower();
-                if (command == "close()")
-                {
-                    Send_Message("我將關閉連線");
-                    Print_Tool.WriteLine("Client關閉中...", ConsoleColorType.Warning);
-                    client.Close();
-                    break;
-                }
-                else if (command == "greet()")
-                {
-                    Greeting();
-                }
-                else if (command == "cls()")
-                {
-                    Refresh();
-                }
-                else if (command == "history()")
-                {
-                    Send_Message(Target_Server_Name, "history()");
-                }
-                else if (command == "showinfo()")
-                {
-                    Show_Param();
-                }
-                else if (command == "help()")
-                {
-                    Help();
-                }
-                else
-                {
-                    Send_Message(input);
-                }
-            }
-        }
-
-
-        public void HandleInput_KEY() // Client 輸出  KEY   到 server
-        {
-            while (true)
-            {
-                var keyinfo = Console.ReadKey(true);
-                string key = keyinfo.Key.ToString();
-
-                Send_Message(key);
-            }
-        }
-  
 
         public void Handle_Receive_Message()
         {
@@ -272,10 +268,24 @@ namespace Client_Socket
 
 
 
-        public void Greeting()
+
+
+
+
+
+
+
+
+
+        #region Private Function
+
+        public void Set_Default()
         {
-            Send_Message("Hello Server. This is sent from " + Client_Name);
-        }
+            Client_Name = Default_Client_Name;
+            Ip = "127.0.0.1";
+            Port = 8080;
+        }//預留
+
 
         private string Get_Target(string msg)
         {
@@ -306,13 +316,13 @@ namespace Client_Socket
             {
                 string serverName = match.Groups[1].Value;
                 //Console.WriteLine(serverName);
-                
-                return serverName;
-            }else
-                return "";
-        
-        }
 
+                return serverName;
+            }
+            else
+                return "";
+
+        }
 
         private bool To_Me_ORNOT(string msg)  //Ex: msg = "To Default_Client8351 : Hello . This is Server: Server" 
         {
@@ -343,8 +353,30 @@ namespace Client_Socket
             return false;
         }
 
+        private static string Get_Random_Name()
+        {
+
+            if (Default_Client_Name == null)
+            {
+                Random rnd = new Random();
+                string name = "Default_Client";
+
+                int rint = rnd.Next(0, 10000); // 生成介於 0 到 9999 的隨機數字
+                string rstring = rint.ToString("D4");
+                name += rstring;
+                return name;
+            }
+            return "";
+        }
+
+        #endregion
 
 
+        #region 功能區
+        public void Greeting()
+        {
+            Send_Message("Hello Server. This is sent from " + Client_Name);
+        }
         public void Show_Info()
         {
             Console.Clear();
@@ -360,82 +392,95 @@ namespace Client_Socket
             Show_Info();
         }
 
-
-        private void Show_Param()
+        internal void Show_Param()
         {
             Send_Message("Name = " + Client_Name);
             Send_Message("IP = " + Ip);
             Send_Message("Port = " + Port);
         }
 
-        private void Help()
+        internal void Help()
         {
             Print_Tool.WriteLine("https://github.com/Luffy1225/Socket_Project", ConsoleColorType.Announce);
         }
+
+        #endregion
+
+
+
 
 
         
     }
 
-    class Client_Main
+    class Program
     {
-        private static bool random = true; // 靜態變數
-
-        public static void Keyin_Param(out string name, out string ip, out int port)
+        public static void Keyin_Param(out string name, out string ip, out int port) //可能為空
         {
-            Random rnd = new Random();
-
-            Print_Tool.WriteLine("輸入Client名字:", ConsoleColorType.Default);
+            Print_Tool.WriteLine("輸入Client名字:", ConsoleColor.Cyan);
             name = Console.ReadLine();
-            if (name == ""){
-                name = "Default_Client";
-                if (random == true)
-                {
-                    int rint = rnd.Next(0, 10000); // 生成介於 0 到 9999 的隨機數字
-                    string rstring = rint.ToString("D4");
-                    name += rstring;
-                }
-                Print_Tool.WriteLine("Name = " + name, ConsoleColorType.Notice);
+
+            Print_Tool.WriteLine("輸入Server IP:", ConsoleColorType.Default);
+            ip = Console.ReadLine();
+
+            Print_Tool.WriteLine("輸入Server Port:", ConsoleColorType.Default);
+            string portstr = Console.ReadLine();
+
+            if (!int.TryParse(portstr, out port))
+            {
+                port = -1; // 轉換失敗
             }
 
-            Print_Tool.WriteLine("輸入目標Server IP:", ConsoleColorType.Default);
-            ip = Console.ReadLine();
-            if (ip == "")
-                ip = "127.0.0.1";
-            Print_Tool.WriteLine("IP = " + ip, ConsoleColorType.Notice);
-
-            Print_Tool.WriteLine("輸入目標Server Port:", ConsoleColorType.Default);
-            string portstr = Console.ReadLine();
-            port = 8080;
-            if (portstr != "")
-                port = int.Parse(portstr);
-            Print_Tool.WriteLine("Port = " + port.ToString(), ConsoleColorType.Notice);
-
         }
+
+
 
 
         static void Main(string[] args)
         {
-            string name, ip;
-            int port;
-            Keyin_Param(out name, out ip, out port);
+            string name = "";
+            string ip = "";
+            int port = -1;
+            string portstr = "";
 
-            
+            if (args.Length > 0) //腳本執行 帶有參數
+            {
+                switch (args.Length)
+                {
+                    case 1:
+                        //name = args[0];
+                        break;
+                    case 2:
+                        //name = args[0];
+                        ip = args[0];
+                        portstr = args[1];
+                        break;
+                    case 3:
+                        name = args[0];
+                        ip = args[1];
+                        portstr = args[2];
+                        break;
+                    default:
+                        Print_Tool.WriteLine("參數輸入: " + args.Length + " 個 不合規定!", ConsoleColorType.Error);
+                        break;
+                }
+            }
+            else // 使用者 點擊 輸入參數
+                Keyin_Param(out name, out ip, out port);
+
+
             Client_Socket Client = new Client_Socket(name, ip, port);
 
-            while (true)
-            {
-                Client.Start();
+            Client.Show_Info();
 
-                Print_Tool.WriteLine("輸入 \"retry\" 重新連接", ConsoleColorType.Warning);
-                string input = Console.ReadLine();
-                if (input != "retry")
-                    break;
-
-            }
+            Client.Set_Default();
+            Client.Start();
 
 
+            Console.ReadKey();
         }
+
+
     }
 
 }
