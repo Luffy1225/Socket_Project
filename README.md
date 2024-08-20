@@ -1,6 +1,7 @@
 # Client-Server Socket (ReadKey)
 
-- 傳輸用 Socket 前往 Socket_Project : Branch : `Main` (https://github.com/Luffy1225/Socket_Project/tree/ReadKey)
+- 傳輸用 Socket 前往 Socket_Project : Branch : [Main](https://github.com/Luffy1225/Socket_Project/tree/ReadKey)
+ - [Todo List](https://github.com/Luffy1225/Socket_Project/blob/ReadKey/Todo.md)
 
 ## 使用教學 
 
@@ -20,7 +21,8 @@
 * IP預設為 `127.0.0.1` 
 * Port預設為 `8080`
 
-### !!注意連線時 Server 與 Client 的 IP Port 應為一致!!
+> [!IMPORTANT]
+> !!注意連線時 Server 與 Client 的 `IP` `Port` 應為一致!!
 
 
 ## 通訊格式
@@ -48,26 +50,9 @@
 
 #### 客戶端功能
 
-1. **`cls()`**
-   - 清除客戶端螢幕資訊。
-
-2. **`close()`**
-   - 關閉客戶端連線。
-
-3. **`history()`**
-   - 請求伺服器發送歷史訊息。
-
-4. **`list()`**
-   - 請求伺服器列出所有連線的客戶端數量。
-     
-5. **`greet()`**
-   - 向Server 打招呼 Server將會告訴Client 他的Server名， (正常情況下 當建立連線後 會立即發送greet() )。
-
-6. **`showinfo()`**
-   - 傳送自己的Name, Ip, Port 到Server。
-
-7. **`help()`**
-   - 前往文件 https://github.com/Luffy1225/Socket_Project
+按下特定按鈕 告知Server 你按下哪一個鍵
+> [!WARNING]
+> !!使用全形 會使操作失效 !!
 
 #### 伺服器端功能
 
@@ -117,3 +102,13 @@ Client.Start();
 Server_Socket Server = new Server_Socket(name, ip, port);
 Server.Start();
 ```
+
+## 腳本使用
+
+前往Run資料夾 點擊 `AutoRun.bat` 執行自動化執行
+
+關於自動化執行相關參數 可以到 `RunParameter.ini` 進行修改
+   - `ClientCount` : 一次開啟的Client數量
+   - `ServerName` : 自動化 的 Server 名稱
+   - `ConnectIP` : 自動化 的 Server/Client 所連接的 IP
+   - `ConnectPort` 自動化 的 Server/Client 所連接的 Port
