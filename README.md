@@ -128,3 +128,6 @@ Server.Start();
 
 關於自動化執行相關參數 可以到 `RunParameter.ini` 進行修改
    - `ClientCount` : 一次開啟的Client數量
+   - `ServerName` : 自動化 的 Server 名稱
+   - `ConnectIP` : 自動化 的 Server/Client 所連接的 IP
+   - `ConnectPort` 自動化 的 Server/Client 所連接的 Port
