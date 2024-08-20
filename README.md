@@ -25,6 +25,9 @@
 > [!IMPORTANT]
 > 腳本執行請確保 `Print_Tool.dll` `RunParameter.ini` 存在
 
+## 說明
+
+
 ### Client端
 
 系統 會要求輸入 這台Client名稱 目標Server IP 目標Server Port
