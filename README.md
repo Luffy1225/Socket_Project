@@ -45,31 +45,33 @@
 
 ### 功能介紹
 
-
 #### 客戶端功能
 
 1. **`cls()`**
    - 清除客戶端螢幕資訊。
 
-2. **`close()`**
+1. **`close()`**
    - 關閉客戶端連線。
 
-3. **`history()`**
+1. **`history()`**
    - 請求伺服器發送歷史訊息。
+     
+1. **`clearhis()`**
+   - 清除歷史訊息。
 
-4. **`list()`**
+1. **`list()`**
    - 請求伺服器列出所有連線的客戶端數量。
      
-5. **`greet()`**
+1. **`greet()`**
    - 向 Server 打招呼：Server 將會告訴 Client 他的 Server 名。
      - 正常情況下，當建立連線後，Server 會立即發送 `greet()`。
 
+1. **`showinfo()`**
+   - 傳送自己的 Name, IP, Port 到 Server。
 
-6. **`showinfo()`**
-   - 傳送自己的Name, Ip, Port 到Server。
-
-7. **`help()`**
+1. **`help()`**
    - 前往文件 https://github.com/Luffy1225/Socket_Project
+
 
 #### 伺服器端功能
 
