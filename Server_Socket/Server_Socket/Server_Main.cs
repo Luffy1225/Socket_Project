@@ -21,7 +21,7 @@ namespace Server_Socket
             _server = server;
         }
 
-        public void StartHandling()
+        public void StartHandling()  // Server 輸出
         {
             while (true)
             {
@@ -75,26 +75,79 @@ namespace Server_Socket
 
     class Server_Socket
     {
-        string Server_Name = "Server";
-        string Host_IP = "127.0.0.1";
-        int Port = 8080;
+        private string _Server_Name;
+        private string _Host_IP;
+        private int _Port;
+        public string Server_Name
+        {
+            get
+            {
+                return _Server_Name;
+            }
+            set
+            {
+                if (value == "")
+                {
+                    _Server_Name = Default_Server_Name;
+                }
+                else
+                {
+                    _Server_Name = value;
+                }
+            }
+        } // 空 = 預設
+        public string Host_IP
+        {
+            get
+            {
+                return _Host_IP;
+            }
+            set
+            {
+                _Host_IP = Socket_Tool.Is_IPv4(value) ? value : Default_Host_IP;
+            }
+        }// 空 = 預設
+        public int Port
+        {
+            get
+            {
+                return _Port;
+            }
+            set
+            {
+                _Port = Socket_Tool.Is_Port(value) ? value : Default_Port;
 
-        TcpListener Server;
-        List<TcpClient> Clients = new List<TcpClient>();
+            }
+        }// 空 = 預設
 
 
-        List<string> history = new List<string>();
+
+        private TcpListener Server;
+        private List<TcpClient> Clients = new List<TcpClient>();
+
+
+        private List<string> history = new List<string>();
+
+
+        #region Default Parameter
+        static private string Default_Server_Name = "Server";
+        static private string Default_Host_IP = "127.0.0.1";
+        static private int Default_Port = 8080;
+        #endregion
 
         public Server_Socket()
         {
-            Server_Name = "Server";
-            Host_IP = "127.0.0.1";
-            Port = 8080;
+            Server_Name = Default_Server_Name;
+            Host_IP = Default_Host_IP;
+            Port = Default_Port;
         }
 
         public Server_Socket(string name)
         {
             Server_Name = name;
+
+            Host_IP = Default_Host_IP;
+            Port = Default_Port;
         }
 
         public Server_Socket(string name, string hosting_ip, int port)
@@ -104,17 +157,9 @@ namespace Server_Socket
             Port = port;
         }
 
-        public void Set_Default()
-        {
-            Server_Name = "Server";
-            Host_IP = "127.0.0.1";
-            Port = 8080;
-        }
 
-        public void Refresh()
-        {
-            Show_Info();
-        }
+        
+
 
 
         public void Start()
@@ -146,6 +191,32 @@ namespace Server_Socket
                 client.Close();
             }
             Server.Stop();
+        }
+
+
+
+
+        public void Send_Message(string message)
+        {
+            message = Server_Name + " : " + message;
+            history.Add(message);
+
+            byte[] data = Encoding.Unicode.GetBytes(message);
+
+            List<TcpClient> clientsCopy = Clients.ToList(); // List 複製   以防止for迴圈中 有人修改 list內容導致 程式崩潰
+
+            foreach (var client in clientsCopy)
+            {
+                NetworkStream stream = client.GetStream();
+                stream.Write(data, 0, data.Length);
+            }
+            Print_Tool.WriteLine(message, ConsoleColorType.Send);
+        }
+
+        public void Send_Message(string towho, string message)
+        {
+            message = "To " + towho + " : " + message;
+            Send_Message(message);
         }
 
         private async Task AcceptClients()
@@ -219,6 +290,28 @@ namespace Server_Socket
 
         }
 
+
+
+
+
+
+
+        #region Private Function
+
+        private void Set_Default()
+        {
+            Server_Name = "Server";
+            Host_IP = "127.0.0.1";
+            Port = 8080;
+        } //預留
+
+
+        private string Get_Target(string msg)
+        {
+            string[] chunks = msg.Split(new[] { " :" }, StringSplitOptions.None);
+            return chunks[0].Trim();
+        }
+
         private string Get_Command(string msg)
         {
             // 找到冒號後的部分
@@ -235,86 +328,13 @@ namespace Server_Socket
             return msg;
         }
 
-        private void HandleInput()  // Server 輸出到 Client
-        {
-            while (true)
-            {
-                Print_Tool.WriteLine("輸入文字: ", ConsoleColorType.Default);
-
-                string input = Console.ReadLine();
-                string low_input = input.ToLower();
-                //if (input.Equals("close()", StringComparison.OrdinalIgnoreCase))
-                //{
-                //    Close();
-                //    break;
-                //}
-                if (low_input == "close()")
-                {
-                    Close();
-                    break;
-                }
-                else if (low_input == "cls()" )
-                {
-                    cls();
-                }
-                else if (low_input == "list()" )
-                {
-                    List_All_Clients();
-                }
-                else if (low_input == "history()")
-                {
-                    Show_History();
-                }
-                else if (low_input == "showinfo()")
-                {
-                    Show_Param();
-                }
-                else if (low_input == "greet()")
-                {
-                    Every_Greet();
-                }
-                else if (low_input == "help()")
-                {
-                    Help();
-                }
-                else
-                {
-                    Send_Message(input);
-                }
-            }
-        }
-
-        public void Send_Message(string message)
-        {
-            message = Server_Name + " : " + message;
-            history.Add(message);
-
-            byte[] data = Encoding.Unicode.GetBytes(message);
-
-            List<TcpClient> clientsCopy = Clients.ToList(); // List 複製   以防止for迴圈中 有人修改 list內容導致 程式崩潰
-
-            foreach (var client in clientsCopy)
-            {
-                NetworkStream stream = client.GetStream();
-                stream.Write(data, 0, data.Length);
-            }
-            Print_Tool.WriteLine(message, ConsoleColorType.Send);
-        }
-
-        public void Send_Message(string towho, string message)
-        {
-            message = "To " + towho + " : " + message;
-            Send_Message(message);
-        }
 
 
 
-        private string Get_Target(string msg)
-        {
-            string[] chunks = msg.Split(new[] { " :" }, StringSplitOptions.None);
-            return chunks[0].Trim();
-        }
 
+
+
+        #endregion
 
 
 
@@ -325,6 +345,10 @@ namespace Server_Socket
         {
             Send_Message("cls");
             Refresh();
+        }
+        public void Refresh()
+        {
+            Show_Info();
         }
 
         internal void Greeting(string who = "")
@@ -398,71 +422,63 @@ namespace Server_Socket
 
     class Program
     {
-
-        public static void Keyin_Param(out string name, out string ip, out int port)
+        public static void Keyin_Param(out string name, out string ip, out int port) //可能為空
         {
             Print_Tool.WriteLine("輸入Server名字:", ConsoleColorType.Default);
             name = Console.ReadLine();
-            if (name == "")
-                name = "Server";
-            Print_Tool.WriteLine("Server = " + name, ConsoleColorType.Notice);
-
 
             Print_Tool.WriteLine("輸入Server IP:", ConsoleColorType.Default);
             ip = Console.ReadLine();
-            if (ip == "")
-                ip = "127.0.0.1";
-            Print_Tool.WriteLine("IP = " + ip, ConsoleColorType.Notice);
-
 
             Print_Tool.WriteLine("輸入Server Port:", ConsoleColorType.Default);
             string portstr = Console.ReadLine();
-            port = 8080;
-            if (portstr != "")
-                port = int.Parse(portstr);
-            Print_Tool.WriteLine("Port = " + port.ToString(), ConsoleColorType.Notice);
 
+            if (!int.TryParse(portstr, out port))
+            {
+                port = -1; // 轉換失敗
+            }
         }
-
 
         static void Main(string[] args)
         {
-            //string name = "Server";
-            //string ip = "";
-            //int port = 8080;
-            //Server_Socket Server;
+            string name = "";
+            string ip = "";
+            int port = -1;
+            string portstr = "";
 
-            //if (args.Length == 1)
-            //{
-            //    name = args[0];
-            //    Server = new Server_Socket();
-            //}
-            //if (args.Length == 3)
-            //{
-            //    name = args[0];
-            //    ip = args[1];
-            //    port = int.Parse(args[2]);
-            //}
-            //else
-            //{
-            //    Keyin_Param(out name, out ip, out port);
-            //}
+            if (args.Length > 0) //腳本執行 帶有參數
+            {
+                switch (args.Length)
+                {
+                    case 1:
+                        name = args[0];
+                        break;
+                    case 2:
+                        name = args[0];
+                        ip = args[1];
+                        break;
+                    case 3:
+                        name = args[0];
+                        ip = args[1];
+                        portstr = args[3];
+                        break;
+                    default:
+                        Print_Tool.WriteLine("參數輸入: "+ args.Length+ " 個 不合規定!", ConsoleColorType.Error);
+                        break;
+                }
+            }
+            else // 使用者 點擊 輸入參數
+                Keyin_Param(out name, out ip, out port);
 
 
-
-            
-            //Server = new Server_Socket(name, ip, port);
-            //Server.Start();
-
-
-
-
-            Server_Socket Server = new Server_Socket();
+            Server_Socket Server = new Server_Socket(name, ip, port);
             Server.Start();
-
 
 
             Console.ReadKey();
         }
+
+
+
     }
 }

@@ -71,26 +71,61 @@ namespace Client_Socket
 
     class Client_Socket
     {
-        private string Client_Name;  //目前client 名稱
+        private string _Client_Name;  //目前client 名稱
+        private string _Ip = "127.0.0.1";
+        private int _Port = 8080;
+        public string Client_Name
+        {
+            get
+            {
+                return _Client_Name;
+            }
+            set
+            {
+                if (value == "")
+                {
+                    _Client_Name = Default_Client_Name;
+                }
+                else
+                {
+                    _Client_Name = value;
+                }
+            }
+        } // 空 = 預設
+        public string Ip
+        {
+            get
+            {
+                return _Ip;
+            }
+            set
+            {
+                _Ip = Socket_Tool.Is_IPv4(value) ? value : Default_Ip;
+            }
+        }// 空 = 預設
+        public int Port
+        {
+            get
+            {
+                return _Port;
+            }
+            set
+            {
+                _Port = Socket_Tool.Is_Port(value) ? value : Default_Port;
+
+            }
+        }// 空 = 預設
+
 
         internal string Target_Server_Name;  //目標server名稱
 
-        private string Ip = "127.0.0.1";
-        private int Port = 8080;
-
-        private bool RandomName = false;
-
-
         private TcpClient client;
-
         private NetworkStream stream;
 
         private int Connect_Timeout = 100;
-        private int Retry_Time = 10;
+        private int Retry_Time = 10;  //重連次數
 
         private bool _isRunning = true;
-
-
         public bool Connected
         {
             get
@@ -103,37 +138,36 @@ namespace Client_Socket
             }
         }
 
+        #region Default Parameter
+        
+        static private string Default_Client_Name = Get_Random_Name(); ///要改
+        static private string Default_Ip = "127.0.0.1";
+        static private int Default_Port = 8080;
+        #endregion
+
         public Client_Socket()
         {
-            Client_Name = Random_Name();
-            Ip = "127.0.0.1";
-            Port = 8080;
+            Client_Name = Default_Client_Name;
+            Ip = Default_Ip;
+            Port = Default_Port;
         }
 
         public Client_Socket(string myname)
         {
             Client_Name = myname;
-            Ip = "127.0.0.1";
-            Port = 8080;
+
+            Ip = Default_Ip;
+            Port = Default_Port;
         }
 
-        public Client_Socket(string myname, string ipstr, int port)
+        public Client_Socket(string name, string ipstr, int port)
         {
-            if (myname == "") 
-                Client_Name = Random_Name();
-            else
-                Client_Name = myname;
-
+            Client_Name = name;
             Ip = ipstr;
             Port = port;
         }
 
-
-        public void Set_Default()
-        {
-            Ip = "127.0.0.1";
-            Port = 8080;
-        }
+        
 
 
         public void Connect()
@@ -202,16 +236,6 @@ namespace Client_Socket
             client.Close();
         }
 
-        public string Random_Name()
-        {
-            Random rnd = new Random();
-            string name = "Default_Client";
-
-            int rint = rnd.Next(0, 10000); // 生成介於 0 到 9999 的隨機數字
-            string rstring = rint.ToString("D4");
-            name += rstring;
-            return name;
-        }
 
 
         public void Send_Message(string message)// 發送資料至伺服器 一定是send color
@@ -231,6 +255,8 @@ namespace Client_Socket
             message = "To " + towho + " : " + message;
             Send_Message(message);
         }
+
+
 
         public void Read_Message()// Client 讀取 Server 輸入
         {
@@ -295,46 +321,6 @@ namespace Client_Socket
             }
 
         }
-        public void HandleInput() // Client 輸出到 server
-        {
-            while (true)
-            {
-                Print_Tool.WriteLine("輸入文字: ", ConsoleColorType.Default);
-
-                string input = Console.ReadLine();
-                string command = input.ToLower();
-
-                if (command == "close()")
-                {
-                    Close();
-                    break;
-                }
-                else if (command == "greet()")
-                {
-                    Greeting();
-                }
-                else if (command == "cls()")
-                {
-                    Refresh();
-                }
-                else if (command == "history()")
-                {
-                    Send_Message(Target_Server_Name, "history()");
-                }
-                else if (command == "showinfo()")
-                {
-                    Show_Param();
-                }
-                else if (command == "help()")
-                {
-                    Help();
-                }
-                else
-                {
-                    Send_Message(input);
-                }
-            }
-        }
 
         public void Handle_Receive_Message()
         {
@@ -355,10 +341,21 @@ namespace Client_Socket
 
 
 
-        public void Greeting()
+
+
+
+
+
+
+        #region Private Function
+
+        public void Set_Default()
         {
-            Send_Message("Hello Server. This is sent from " + Client_Name);
-        }
+            Client_Name = Default_Client_Name;
+            Ip = "127.0.0.1";
+            Port = 8080;
+        }//預留
+
 
         private string Get_Target(string msg)
         {
@@ -396,7 +393,6 @@ namespace Client_Socket
         
         }
 
-
         private bool To_Me_ORNOT(string msg)  //Ex: msg = "To Default_Client8351 : Hello . This is Server: Server" 
         {
             // 定義要匹配的前綴
@@ -426,8 +422,30 @@ namespace Client_Socket
             return false;
         }
 
+        private static string Get_Random_Name()
+        {
+
+            if (Default_Client_Name == null)
+            {
+                Random rnd = new Random();
+                string name = "Default_Client";
+
+                int rint = rnd.Next(0, 10000); // 生成介於 0 到 9999 的隨機數字
+                string rstring = rint.ToString("D4");
+                name += rstring;
+                return name;
+            }
+            return "";
+        }
+
+        #endregion
 
 
+        #region 功能區
+        public void Greeting()
+        {
+            Send_Message("Hello Server. This is sent from " + Client_Name);
+        }
         public void Show_Info()
         {
             Console.Clear();
@@ -443,7 +461,6 @@ namespace Client_Socket
             Show_Info();
         }
 
-
         internal void Show_Param()
         {
             Send_Message("Name = " + Client_Name);
@@ -456,63 +473,74 @@ namespace Client_Socket
             Print_Tool.WriteLine("https://github.com/Luffy1225/Socket_Project", ConsoleColorType.Announce);
         }
 
+        #endregion
+
     }
 
     class Client_Main
     {
-        private static bool random = true; // 靜態變數
-
-        public static void Keyin_Param(out string name, out string ip, out int port)
+        public static void Keyin_Param(out string name, out string ip, out int port) //可能為空
         {
-            Random rnd = new Random();
-
             Print_Tool.WriteLine("輸入Client名字:", ConsoleColorType.Default);
             name = Console.ReadLine();
-            if (name == ""){
-                name = "Default_Client";
-                if (random == true)
-                {
-                    int rint = rnd.Next(0, 10000); // 生成介於 0 到 9999 的隨機數字
-                    string rstring = rint.ToString("D4");
-                    name += rstring;
-                }
-                Print_Tool.WriteLine("Name = " + name, ConsoleColorType.Notice);
+
+            Print_Tool.WriteLine("輸入Server IP:", ConsoleColorType.Default);
+            ip = Console.ReadLine();
+
+            Print_Tool.WriteLine("輸入Server Port:", ConsoleColorType.Default);
+            string portstr = Console.ReadLine();
+
+            if (!int.TryParse(portstr, out port))
+            {
+                port = -1; // 轉換失敗
             }
 
-            Print_Tool.WriteLine("輸入目標Server IP:", ConsoleColorType.Default);
-            ip = Console.ReadLine();
-            if (ip == "")
-                ip = "127.0.0.1";
-            Print_Tool.WriteLine("IP = " + ip, ConsoleColorType.Notice);
-
-            Print_Tool.WriteLine("輸入目標Server Port:", ConsoleColorType.Default);
-            string portstr = Console.ReadLine();
-            port = 8080;
-            if (portstr != "")
-                port = int.Parse(portstr);
-            Print_Tool.WriteLine("Port = " + port.ToString(), ConsoleColorType.Notice);
-
         }
+
+
 
 
         static void Main(string[] args)
         {
-            //string name, ip;
-            //int port;
-            //Keyin_Param(out name, out ip, out port);
+            string name = "";
+            string ip = "";
+            int port = -1;
+            string portstr = "";
 
-            //Client_Socket Client = new Client_Socket(name, ip, port);
-            //Client.Start();
+            if (args.Length > 0) //腳本執行 帶有參數
+            {
+                switch (args.Length)
+                {
+                    case 1:
+                        name = args[0];
+                        break;
+                    case 2:
+                        name = args[0];
+                        ip = args[1];
+                        break;
+                    case 3:
+                        name = args[0];
+                        ip = args[1];
+                        portstr = args[3];
+                        break;
+                    default:
+                        Print_Tool.WriteLine("參數輸入: " + args.Length + " 個 不合規定!", ConsoleColorType.Error);
+                        break;
+                }
+            }
+            else // 使用者 點擊 輸入參數
+                Keyin_Param(out name, out ip, out port);
 
 
-
-            Client_Socket Client = new Client_Socket();
+            Client_Socket Client = new Client_Socket(name, ip, port);
+            Client.Set_Default();
             Client.Start();
 
+
             Console.ReadKey();
-
-            //Console.ReadLine();
         }
-    }
 
+
+    }
 }
+
