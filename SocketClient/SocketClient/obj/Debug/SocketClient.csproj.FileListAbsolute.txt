@@ -1,0 +1,10 @@
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\SocketClient.exe.config
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\SocketClient.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\SocketClient.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Luffy_Tool.dll
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\bin\Debug\Luffy_Tool.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\obj\Debug\SocketClient.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Client_Socket\Client_Socket\obj\Debug\SocketClient.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\SocketClient\SocketClient\bin\Debug\SocketClient.exe.config
+D:\Users\boshuo.zeng\Desktop\Socket_Project\SocketClient\SocketClient\obj\Debug\SocketClient.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\SocketClient\SocketClient\obj\Debug\SocketClient.pdb

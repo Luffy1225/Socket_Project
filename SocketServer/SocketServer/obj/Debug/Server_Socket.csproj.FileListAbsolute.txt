@@ -1,0 +1,33 @@
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\ConsoleApplication6\ConsoleApplication6\bin\Debug\ConsoleApplication6.exe.config
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\ConsoleApplication6\ConsoleApplication6\obj\Debug\ConsoleApplication6.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\ConsoleApplication6\ConsoleApplication6\obj\Debug\ConsoleApplication6.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Server_Socket\Server_Socket\bin\Debug\ConsoleApplication6.exe.config
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Server_Socket\Server_Socket\obj\Debug\ConsoleApplication6.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Server_Socket\Server_Socket\obj\Debug\ConsoleApplication6.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Server_Socket\Server_Socket\bin\Debug\ConsoleApplication6.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Server_Socket\Server_Socket\bin\Debug\ConsoleApplication6.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Server_Socket\Server_Socket\bin\Debug\Newtonsoft.Json.dll
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Server_Socket\Server_Socket\obj\Debug\Server_Socket.csprojResolveAssemblyReference.cache
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Newtonsoft.Json.dll
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\obj\Debug\Server_Socket.csprojResolveAssemblyReference.cache
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\obj\Debug\Server_Socket.csprojResolveAssemblyReference.cache
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Server_Socket.exe.config
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Server_Socket.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Server_Socket.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Client_Socket.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Newtonsoft.Json.dll
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Print_Tool.dll
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Client_Socket.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Print_Tool.pdb
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\obj\Debug\Server_Socket.exe
+D:\Users\boshuo.zeng\Documents\Visual Studio 2013\Projects\Socket_Project\Server_Socket\Server_Socket\obj\Debug\Server_Socket.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Server_Socket.exe.config
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\obj\Debug\Server_Socket.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\obj\Debug\Server_Socket.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Server_Socket.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Server_Socket.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Client_Socket.exe
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Client_Socket.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Luffy_Tool.dll
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\Luffy_Tool.pdb
+D:\Users\boshuo.zeng\Desktop\Socket_Project\Server_Socket\Server_Socket\bin\Debug\SocketServer.exe.config
