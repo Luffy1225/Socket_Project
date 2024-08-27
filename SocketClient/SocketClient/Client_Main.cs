@@ -537,7 +537,6 @@ namespace SocketClient
 
             Client.Show_Info();
 
-            Client.Set_Default();
             Client.Start();
 
 

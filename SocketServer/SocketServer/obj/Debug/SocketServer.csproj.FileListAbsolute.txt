@@ -20,3 +20,17 @@ D:\Users\boshuo.zeng\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\
 D:\Users\boshuo.zeng\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\SocketClient.pdb
 D:\Users\boshuo.zeng\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\Luffy_Tool.pdb
 D:\Users\boshuo.zeng\Desktop\Socket_Project\SocketServer\SocketServer\obj\Debug\SocketServer.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\SocketServer.exe.config
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\SocketServer.exe
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\SocketServer.pdb
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\Luffy_Tool.dll
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\SocketClient.exe
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\SocketClient.pdb
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\SocketClient.exe.config
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\bin\Debug\Luffy_Tool.pdb
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\obj\Debug\SocketServer.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\obj\Debug\SocketServer.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\obj\Debug\SocketServer.csproj.CopyComplete
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\obj\Debug\SocketServer.exe
+C:\Users\User\Desktop\Socket_Project\SocketServer\SocketServer\obj\Debug\SocketServer.pdb

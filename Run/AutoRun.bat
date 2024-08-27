@@ -24,12 +24,12 @@ set "ConnectIP=%ConnectIP:"=%"
 set "ConnectPort=%ConnectPort:"=%"
 
 REM 執行Server_Socket.exe，不等待結束
- start "" Server_Socket.exe %ServerName%
+ start "" SocketServer.exe %ServerName%
 
 
 REM 根據ClientCount的數量執行Client_Socket.exe，不等待結束
 for /l %%i in (1,1,%ClientCount%) do (
-    start "" Client_Socket.exe %ConnectIP% %ConnectPort%
+    start "" SocketClient.exe %ConnectIP% %ConnectPort%
 )
 
 endlocal
